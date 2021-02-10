@@ -3,7 +3,16 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { autoUpdater } from "electron-updater"
 
+export default class AppUpdater {
+  constructor() {
+    const log = require("electron-log")
+    log.transports.file.level = "debug"
+    autoUpdater.logger = log
+    autoUpdater.checkForUpdatesAndNotify()
+  }
+}
 ReactDOM.render(
   <React.StrictMode>
     <App />

@@ -7,6 +7,7 @@
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "electron-is-dev": "^1.2.0",
+    "electron-log": "^4.3.1",
     "electron-updater": "^4.3.5",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
@@ -19,12 +20,13 @@
     "build-react": "react-scripts build",
     "start-electron": "nodemon --watch ./public/* --exec \"electron .\"",
     "dev": "concurrently \"yarn start-react\" \"wait-on http://localhost:3000 && yarn start-electron\" ",
-    "postinstall": "electron builder install-app-deps",
+    "postinstall": "electron-builder install-app-deps",
     "pack-app": "yarn build-react && electron-builder --dir",
-    "pack-app-win": "yarn build-react && electron-builder --win --x64 --dir",
+    "pack-app-win": "yarn build-react && electron-builder --win --x64 --publish always",
     "pack-build": "electron-builder --dir",
     "build": "yarn build-react && electron-builder",
     "test": "react-scripts test",
+    "publish": "electron-builder --publish always",
     "eject": "react-scripts eject"
   },
   "main": "public/electron.js",
@@ -40,7 +42,9 @@
     "publish": [
       {
         "provider": "github",
-        "owner": "ivan"
+        "owner": "IvanGonzalezSuarez",
+        "token": "4b216b7a7925c30b12b6e0eff9dd7ee4dda3033a",
+        "repo": "https://github.com/IvanGonzalezSuarez/SqliteReact.git"
       }
     ],
     "win": {
