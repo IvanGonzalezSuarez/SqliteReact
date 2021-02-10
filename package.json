@@ -6,16 +6,49 @@
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
+    "electron-is-dev": "^1.2.0",
+    "electron-updater": "^4.3.5",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-scripts": "4.0.2",
+    "sqlite3": "^5.0.1",
     "web-vitals": "^1.0.1"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start-react": "react-scripts start",
+    "build-react": "react-scripts build",
+    "start-electron": "nodemon --watch ./public/* --exec \"electron .\"",
+    "dev": "concurrently \"yarn start-react\" \"wait-on http://localhost:3000 && yarn start-electron\" ",
+    "postinstall": "electron builder install-app-deps",
+    "pack-app": "yarn build-react && electron-builder --dir",
+    "pack-app-win": "yarn build-react && electron-builder --win --x64 --dir",
+    "pack-build": "electron-builder --dir",
+    "build": "yarn build-react && electron-builder",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
+  },
+  "main": "public/electron.js",
+  "build": {
+    "appId": "com.mayoral.sqlitepackage",
+    "productName": "Sqlite-package",
+    "files": [
+      "build/**/*"
+    ],
+    "directories": {
+      "buildResources": "build"
+    },
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "ivan"
+      }
+    ],
+    "win": {
+      "icon": "./build/images/appicon.ico",
+      "target": [
+        "nsis"
+      ]
+    }
   },
   "eslintConfig": {
     "extends": [
@@ -34,5 +67,12 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "concurrently": "^5.3.0",
+    "electron": "^11.2.3",
+    "electron-builder": "^22.9.1",
+    "nodemon": "^2.0.7",
+    "wait-on": "^5.2.1"
   }
 }
